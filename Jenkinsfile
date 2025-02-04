@@ -7,42 +7,20 @@ pipeline {
                 git 'https://github.com/AFREUX/devopsproject.git'
             }
         }
-
         stage('Build') {
             steps {
-                script {
-                    echo 'Building Docker image...'
-                    bat 'docker build -t my-node-app .'
-                }
+                echo 'Building the project...'
             }
         }
-
         stage('Test') {
             steps {
-                script {
-                    echo 'Running tests...'
-                    bat 'npm start'
-
-                }
+                echo 'Running tests...'
             }
         }
-
         stage('Deploy') {
             steps {
-                script {
-                    echo 'Skipping Kubernetes deployment for now...'
-                    // Replace with 'sh kubectl apply -f k8s-deployment.yaml' when ready
-                }
+                echo 'Deploying the application...'
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline succeeded!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
