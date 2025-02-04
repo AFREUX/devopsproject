@@ -4,23 +4,45 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/AFREUX/devopsproject.git'
+                checkout scm
             }
         }
+
         stage('Build') {
             steps {
-                echo 'Building the project...'
+                script {
+                    echo 'sh docker build -t my-node-app .'
+                    // Replace with 'sh docker build -t my-node-app .' when ready
+                }
             }
         }
+
         stage('Test') {
             steps {
-                echo 'Running tests...'
+                script {
+                    echo 'Running tests...'
+                    // Add your test command if applicable
+                    sh 'echo "Tests are successful"' 
+                }
             }
         }
+
         stage('Deploy') {
             steps {
-                echo 'Deploying the application...'
+                script {
+                    echo 'Skipping Kubernetes deployment for now...'
+                    // Replace with 'sh kubectl apply -f k8s-deployment.yaml' when ready
+                }
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'Pipeline succeeded!'
+        }
+        failure {
+            echo 'Pipeline failed!'
         }
     }
 }
