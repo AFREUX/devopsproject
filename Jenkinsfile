@@ -11,8 +11,8 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    echo 'sh docker build -t my-node-app .'
-                    // Replace with 'sh docker build -t my-node-app .' when ready
+                    echo 'Building Docker image...'
+                    bat 'docker build -t my-node-app .'
                 }
             }
         }
@@ -21,8 +21,8 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests...'
-                    // Add your test command if applicable
-                    sh 'echo "Tests are successful"' 
+                    bat 'npm test'
+
                 }
             }
         }
