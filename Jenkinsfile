@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                checkout scm
+                git 'https://github.com/AFREUX/devopsproject.git'
             }
         }
 
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running tests...'
-                    bat 'npm test'
+                    bat 'npm start'
 
                 }
             }
