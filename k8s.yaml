@@ -1,0 +1,43 @@
+# Define the API version and kind of resource
+apiVersion: apps/v1  # The API version for deployments
+kind: Deployment      # This resource is a Deployment
+
+# Metadata for the deployment
+metadata:
+  name: my-app        # Change this to the name of your application
+  labels:
+    app: my-app       # Change this label to match your application
+
+# Specification for the deployment
+spec:
+  replicas: 3         # Number of pod replicas to run; adjust as needed
+  selector:
+    matchLabels:
+      app: my-app     # This should match the labels defined in the pod template
+  template:
+    metadata:
+      labels:
+        app: my-app   # This should match the selector above
+    spec:
+      containers:
+      - name: my-app-container  # Change this to the name of your container
+        image: my-app-image:latest  # Change this to your container image
+        ports:
+        - containerPort: 80     # Change this to the port your application listens on
+        env:                    # Optional: Define environment variables for your container
+        - name: ENV_VAR_NAME    # Change this to your environment variable name
+          value: "value"        # Change this to the value of your environment variable
+
+---
+# Define a Service to expose the application
+apiVersion: v1              # The API version for services
+kind: Service                # This resource is a Service
+metadata:
+  name: my-app-service       # Change this to the name of your service
+spec:
+  type: LoadBalancer          # Change this to ClusterIP, NodePort, or LoadBalancer as needed
+  ports:
+  - port: 80                 # The port that the service will expose
+    targetPort: 80           # The port on the container that the service will forward to
+  selector:
+    app: my-app              # This should match the labels defined in the deployment
