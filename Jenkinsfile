@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     bat """
-                    docker build -t $DOCKER_IMAGE .
+                    docker build -f Dockerfile -t $DOCKER_IMAGE .
                     """
                 }
             }
