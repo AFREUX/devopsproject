@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Jenkins credentials ID for DockerHub
+        DOCKER_IMAGE = 'afreux/devopsproject:latest' // Change to your Docker image name
+    }
 
     stages {
         stage('Checkout') {
@@ -7,20 +11,36 @@ pipeline {
                 git 'https://github.com/AFREUX/devopsproject.git'
             }
         }
-        stage('Build') {
+        stage('Build docker image') {
             steps {
-                echo 'Building the project...'
+                script {
+                    bat """
+                    docker build -t $DOCKER_IMAGE .
+                    """
+                }
             }
         }
-        stage('Test') {
+        
+        stage('push docker image') {
             steps {
-                echo 'Running tests...'
+                 script {
+                 bat """
+                    echo %DOCKERHUB_CREDENTIALS_PSW% | docker login -u %DOCKERHUB_CREDENTIALS_USR% --password-stdin
+                    docker push $DOCKER_IMAGE
+                    """
+                 }
             }
         }
-        stage('Deploy') {
+        stage('Deploy'){
             steps {
-                echo 'Deploying the application...'
+                echo 'kubectl test .... '
+
             }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }
