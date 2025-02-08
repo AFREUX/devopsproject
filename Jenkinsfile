@@ -39,10 +39,21 @@ pipeline {
         }
 
         stage('Deploy') {
-            steps {
-                echo 'kubectl test .... '
-            }
+    steps {
+        script {
+            // Print a message indicating the deployment process is starting
+            echo 'Deploying to Kubernetes...'
+
+            // Apply the Kubernetes configuration
+            bat """
+            kubectl apply -f C:\\Users\\user\\Desktop\\project\\k8s.yaml
+            kubectl rollout status deployment/my-app
+            """  // Replace with the path to your YAML file
+
+            
         }
+    }
+}
     }
 
     post {
