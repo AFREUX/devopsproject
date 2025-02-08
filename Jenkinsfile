@@ -15,7 +15,8 @@ pipeline {
             steps {
                 script {
                     bat """
-                    docker build -f Dockerfile -t $DOCKER_IMAGE .
+                    dir C:\\Users\\user\\Desktop\\project
+                    docker build -f C:\\Users\\user\\Desktop\\project\\Dockerfile -t $DOCKER_IMAGE C:\\Users\\user\\Desktop\\project
                     """
                 }
             }
