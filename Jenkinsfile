@@ -43,15 +43,15 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    echo 'Deploying to Kubernetes...'
-                    sh """
-                        echo "Listing workspace directory:"
-                        ls -l ${WORKSPACE}
-                        echo "Applying Kubernetes configuration..."
-                        kubectl apply -f ${WORKSPACE}/k8s.yaml
-                        DEPLOYMENT_NAME=\$(kubectl get deployments -o jsonpath='{.items[0].metadata.name}')
-                        kubectl rollout status deployment/\$DEPLOYMENT_NAME
-                    """
+                    withCredentials([file(credentialsId: 'k3s-kubeconfig', variable: 'KUBECONFIG')]) {
+                        sh """
+                            export KUBECONFIG=${KUBECONFIG}
+                            echo 'Deploying to Kubernetes...'
+                            kubectl apply -f ${WORKSPACE}/k8s.yaml
+                            DEPLOYMENT_NAME=\$(kubectl get deployments -o jsonpath='{.items[0].metadata.name}')
+                            kubectl rollout status deployment/\$DEPLOYMENT_NAME
+                        """
+                    }
                 }
             }
         }
@@ -60,6 +60,12 @@ pipeline {
     post {
         always {
             cleanWs()
+        }
+        failure {
+            echo "Pipeline failed! Check the logs for details."
+        }
+        success {
+            echo "Pipeline succeeded! Application deployed successfully."
         }
     }
 }
