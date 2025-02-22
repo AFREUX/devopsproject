@@ -1,0 +1,41 @@
+# Terraform Files
+*.tfstate
+*.tfstate.backup
+.terraform/
+jenkins.msi
+*.hcl
+terraform.tfvars
+*.tfvars.json
+.terraform.lock.hcl
+main.tf
+
+
+
+# Python Files (if applicable)
+__pycache__/
+*.py[cod]
+
+# IDE and OS files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Backup and temp files
+*.swp
+*.bak
+*.backup
+
+# Docker Files
+.dockerignore
+Dockerfile
+
+
+ignore/
+
+
+# Kubernetes (if this is a generated file, else track it)
+k8s.yaml
+
+# Other unwanted files
+*.lock
