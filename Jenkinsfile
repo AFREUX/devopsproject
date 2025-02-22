@@ -16,12 +16,14 @@ pipeline {
         stage('Build docker image') {
             steps {
                 script {
-                    sh """
-                        docker info
-                        ls -l /var/run/docker.sock
-                        dir /home/azureuser/jenkins_workspace/devopsproject
-                        docker build -f /home/azureuser/jenkins_workspace/devopsproject/Dockerfile -t ${DOCKER_IMAGE_NAME}:${BUILD_TAG} -t ${DOCKER_IMAGE_NAME}:latest /home/azureuser/jenkins_workspace/devopsproject
-                    """
+                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
+                        sh """
+                            docker info
+                            ls -l /var/run/docker.sock
+                            ls -l ${WORKSPACE}
+                            docker build -f ${WORKSPACE}/Dockerfile -t ${DOCKER_IMAGE_NAME}:${BUILD_TAG} -t ${DOCKER_IMAGE_NAME}:latest ${WORKSPACE}
+                        """
+                    }
                 }
             }
         }
@@ -31,7 +33,7 @@ pipeline {
                 withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
                         sh """
-                        echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin
+                        echo \$PASSWORD | docker login -u \$USERNAME --password-stdin
                         docker push ${DOCKER_IMAGE_NAME}:${BUILD_TAG}
                         docker push ${DOCKER_IMAGE_NAME}:latest
                         """
@@ -43,14 +45,12 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Print a message indicating the deployment process is starting
                     echo 'Deploying to Kubernetes i am so far...'
-
-                    // Apply the Kubernetes configuration
                     sh """
-                    kubectl apply -f /home/azureuser/jenkins_workspace/devopsproject/k8s.yaml
-                    kubectl rollout status deployment/my-app
-                    """  // Replace with the path to your YAML file
+                    kubectl apply -f ${WORKSPACE}/k8s.yaml
+                    DEPLOYMENT_NAME=\$(kubectl get deployments -o jsonpath='{.items[0].metadata.name}')
+                    kubectl rollout status deployment/\$DEPLOYMENT_NAME
+                    """
                 }
             }
         }
