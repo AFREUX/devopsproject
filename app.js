@@ -8,8 +8,8 @@ app.use(express.json());
 
 // Sample data
 let items = [
-  { id: 1, name: "Item 1", price: 10 },
-  { id: 2, name: "Item 2", price: 20 },
+  { id: 1, name: "Item1", price: 10 },
+  { id: 2, name: "Item2", price: 20 },
 ];
 
 let cart = [];
