@@ -1,7 +1,7 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub') // Jenkins credentials ID for DockerHub
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Jenkins credentials ID for DockerHub
         DOCKER_IMAGE_NAME = 'afreux/devopsproject' // Docker image name without tag
         BUILD_TAG = "${env.BUILD_NUMBER}" // Jenkins build number for tagging
     }
@@ -27,7 +27,7 @@ pipeline {
 
         stage('Push docker image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker-hub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([usernamePassword(credentialsId: 'dockerhub', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     script {
                         sh """
                         echo ${PASSWORD} | docker login -u ${USERNAME} --password-stdin
