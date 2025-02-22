@@ -25,6 +25,7 @@ Thumbs.db
 *.swp
 *.bak
 *.backup
+k3s.yaml
 
 
 
