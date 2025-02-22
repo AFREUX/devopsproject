@@ -43,7 +43,7 @@ pipeline {
             steps {
                 script {
                     // Print a message indicating the deployment process is starting
-                    echo 'Deploying to Kubernetes...'
+                    echo 'Deploying to Kubernetes i am so far...'
 
                     // Apply the Kubernetes configuration
                     sh """
