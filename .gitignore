@@ -32,8 +32,7 @@ Thumbs.db
 ignore/
 
 
-# Kubernetes (if this is a generated file, else track it)
-k8s.yaml
+
 
 # Other unwanted files
 *.lock

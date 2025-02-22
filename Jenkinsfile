@@ -45,9 +45,12 @@ pipeline {
                 script {
                     echo 'Deploying to Kubernetes...'
                     sh """
-                    kubectl apply -f ${WORKSPACE}/k8s.yaml
-                    DEPLOYMENT_NAME=\$(kubectl get deployments -o jsonpath='{.items[0].metadata.name}')
-                    kubectl rollout status deployment/\$DEPLOYMENT_NAME
+                        echo "Listing workspace directory:"
+                        ls -l ${WORKSPACE}
+                        echo "Applying Kubernetes configuration..."
+                        kubectl apply -f ${WORKSPACE}/k8s.yaml
+                        DEPLOYMENT_NAME=\$(kubectl get deployments -o jsonpath='{.items[0].metadata.name}')
+                        kubectl rollout status deployment/\$DEPLOYMENT_NAME
                     """
                 }
             }
