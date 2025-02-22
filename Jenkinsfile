@@ -19,7 +19,8 @@ pipeline {
                     sh """
                         docker info
                         ls -l /var/run/docker.sock
-                        docker build -f Dockerfile -t ${DOCKER_IMAGE_NAME}:${BUILD_TAG} -t ${DOCKER_IMAGE_NAME}:latest .
+                        dir /home/azureuser/jenkins_workspace/devopsproject
+                        docker build -f /home/azureuser/jenkins_workspace/devopsproject/Dockerfile -t ${DOCKER_IMAGE_NAME}:${BUILD_TAG} -t ${DOCKER_IMAGE_NAME}:latest /home/azureuser/jenkins_workspace/devopsproject
                     """
                 }
             }
