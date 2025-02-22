@@ -26,9 +26,7 @@ Thumbs.db
 *.bak
 *.backup
 
-# Docker Files
-.dockerignore
-Dockerfile
+
 
 
 ignore/

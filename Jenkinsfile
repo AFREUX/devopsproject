@@ -16,14 +16,12 @@ pipeline {
         stage('Build docker image') {
             steps {
                 script {
-                    catchError(buildResult: 'FAILURE', stageResult: 'FAILURE') {
-                        sh """
-                            docker info
-                            ls -l /var/run/docker.sock
-                            ls -l ${WORKSPACE}
-                            docker build -f ${WORKSPACE}/Dockerfile -t ${DOCKER_IMAGE_NAME}:${BUILD_TAG} -t ${DOCKER_IMAGE_NAME}:latest ${WORKSPACE}
-                        """
-                    }
+                    sh """
+                        echo "Listing workspace directory:"
+                        ls -l ${WORKSPACE}
+                        echo "Building Docker image..."
+                        docker build -f ${WORKSPACE}/Dockerfile -t ${DOCKER_IMAGE_NAME}:${BUILD_TAG} -t ${DOCKER_IMAGE_NAME}:latest ${WORKSPACE}
+                    """
                 }
             }
         }
@@ -45,7 +43,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    echo 'Deploying to Kubernetes i am so far...'
+                    echo 'Deploying to Kubernetes...'
                     sh """
                     kubectl apply -f ${WORKSPACE}/k8s.yaml
                     DEPLOYMENT_NAME=\$(kubectl get deployments -o jsonpath='{.items[0].metadata.name}')
