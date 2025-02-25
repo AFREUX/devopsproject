@@ -1,5 +1,5 @@
 // Define the API URL based on the environment
-const API_URL = window.location.hostname === "localhost" ? "http://localhost:3000" : "http://20.61.86.182";
+const API_URL = window.location.hostname === "localhost" ? "http://localhost:3000" : "http://20.61.86.182:3000";
 
 // DOM Elements
 const itemsList = document.getElementById("itemsList");
