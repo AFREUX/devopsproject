@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, "public")));
 let items = [
   { id: 1, name: "Item1", price: 10 },
   { id: 2, name: "Item2", price: 20 },
+  { id: 3, name: "Item3", price: 200 },
 ];
 
 let cart = [];
