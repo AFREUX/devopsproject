@@ -4,8 +4,11 @@ const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 3000;
 
-// Enable CORS for all routes
-app.use(cors());
+app.use(cors({
+  origin: 'http://20.61.86.182:30000', // Adjust this to your frontend's URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 
 // Middleware to parse JSON
 app.use(express.json());
