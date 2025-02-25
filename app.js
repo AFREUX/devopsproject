@@ -1,13 +1,19 @@
 const express = require("express");
+const cors = require("cors"); // Import CORS
 const app = express();
 const path = require("path");
 const PORT = process.env.PORT || 3000;
+
+// Enable CORS for all routes
+app.use(cors());
 
 // Middleware to parse JSON
 app.use(express.json());
 
 // Serve static files from the "public" directory
 app.use(express.static(path.join(__dirname, "public")));
+
+// Rest of your code...
 
 // Sample data
 let items = [
