@@ -120,12 +120,10 @@ app.delete("/cart/:id", (req, res) => {
   res.json({ message: "Item removed from cart" });
 });
 
-
-// Start server and listen on all network interfaces (0.0.0.0)
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Server running on http://0.0.0.0:${PORT}`);
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });
-
 
 // Export for testing
 module.exports = app;
