@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shopping Cart App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>Shopping Cart App</h1>
+
+  <!-- Add Item Form -->
+  <div>
+    <h2>Add Item</h2>
+    <form id="addItemForm">
+      <input type="text" id="itemName" placeholder="Item Name" required>
+      <input type="number" id="itemPrice" placeholder="Item Price" required>
+      <button type="submit">Add Item</button>
+    </form>
+  </div>
+
+  <!-- Items List -->
+  <div>
+    <h2>Items</h2>
+    <ul id="itemsList"></ul>
+  </div>
+
+  <!-- Add to Cart Form -->
+  <div>
+    <h2>Add to Cart</h2>
+    <form id="addToCartForm">
+      <select id="cartItemId" required>
+        <!-- Options will be populated dynamically -->
+      </select>
+      <input type="number" id="cartItemQuantity" placeholder="Quantity" required>
+      <button type="submit">Add to Cart</button>
+    </form>
+  </div>
+
+  <!-- Cart Items List -->
+  <div>
+    <h2>Cart</h2>
+    <ul id="cartList"></ul>
+  </div>
+
+  <script src="web.js"></script>
+</body>
+</html>

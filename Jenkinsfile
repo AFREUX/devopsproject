@@ -49,6 +49,7 @@ pipeline {
                             echo 'Deploying to Kubernetes...'
                             kubectl apply -f ${WORKSPACE}/k8s.yaml
                             DEPLOYMENT_NAME=\$(kubectl get deployments -o jsonpath='{.items[0].metadata.name}')
+                            kubectl rollout restart deployment/\$DEPLOYMENT_NAME
                             kubectl rollout status deployment/\$DEPLOYMENT_NAME
                         """
                     }
